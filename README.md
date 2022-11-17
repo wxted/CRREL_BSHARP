@@ -19,5 +19,11 @@ Clone this repository and in a terminal:
 
 A brief example script is provided in the bin directory.
 
+
+## Ongoing work efforts ##
+Currently, work is being performed to apply this tool to locally stored WRF output data.
+Additionally, it is being modified to be able to run without terrain downscaling.
+These efforts will result in a full version release when complete.
+
 Corresponding author:
 Ted Letcher - Theodore.W.Letcher@erdc.dren.mil
