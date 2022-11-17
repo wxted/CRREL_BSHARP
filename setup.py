@@ -26,8 +26,7 @@ numpy.distutils.core.setup(
       author_email="Theodore.W.Letcher@erdc.dren.mil",
       version='0.2.0',
       ext_modules=[wrapper],
-      packages=setuptools.find_packages("bsharp"),
-      package_dir={"": "bsharp"},
+      packages=['bsharp'],
       license='MIT',
       install_requires=['gdal','netCDF4','pygrib']
       )

@@ -1,6 +1,7 @@
 ## Example Usage ##
 ## This script shows how to initailize run the BSHARP model while outputting to netcdf data.
 from bsharp import main_functions as BSHARP
+import datetime as DT
 
 MetDataPath='path/to/local/grib2/data/'
 demPath='path/to/dem/geotiff/data'

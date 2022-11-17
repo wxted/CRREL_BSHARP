@@ -559,7 +559,6 @@ class BSHARP:
 
     ## The following functions load the static data from a DEM (geotiff) and NWP grib data.
 
-
     def static_from_array(self,lon,lat,elevation,lcover):
         """This is a special helper function for those who want to read the static data directly into
            the BSHARP framework from their own sources.  This function is called
@@ -571,38 +570,37 @@ class BSHARP:
            lat (array 1D/2D): numpy array with latitude values
            elevation (array 2D): numpy array with elevation values (meters)
            lcover (array 2D): numpy array with integer values of land category following IGPB. Sets forest/water gridcells.
+        """
 
-           """
+        self.dlon=lon[1]-lon[0]
+        self.dlat=lat[1]-lat[0]
 
-           self.dlon=lon[1]-lon[0]
-           self.dlat=lat[1]-lat[0]
+        self.region_box=[np.min(lon)-0.05,np.max(lon)+0.05,np.min(lat)-0.05,np.max(lat)+0.05]
 
-           self.region_box=[np.min(lon)-0.05,np.max(lon)+0.05,np.min(lat)-0.05,np.max(lat)+0.05]
+        self.longitude=lon[:]
+        self.latitude=lat[:]
+        self.elevation=elevation[:] # without unit support
 
-           self.longitude=lon[:]
-           self.latitude=lat[:]
-           self.elevation=elevation[:] # without unit support
+        self.forest=np.ma.masked_greater(lcover[:],5).filled(0.0)/lcover[:]
+        self.water=np.ma.masked_not_equal(lcover[:],17).filled(0.0)/lcover[:]
 
-           self.forest=np.ma.masked_greater(lcover[:],5).filled(0.0)/lcover[:]
-           self.water=np.ma.masked_not_equal(lcover[:],17).filled(0.0)/lcover[:]
+        if self.fast==True:
+           print("Generating weights for fast 2D interpolation, this may take a few moments ... ")
+           self.get_2d_weights()
+           print("done.")
 
-           if self.fast==True:
-               print("Generating weights for fast 2D interpolation, this may take a few moments ... ")
-               self.get_2d_weights()
-               print("done.")
+        ## Interpolate "coarse" resoltion height to high resolution 2D DEM.
+        self.ifd_elevation=self.interp_grb_to_dem(self.fd_elevation,
+                   fast=self.fast)
 
-           ## Interpolate "coarse" resoltion height to high resolution 2D DEM.
-           self.ifd_elevation=self.interp_grb_to_dem(self.fd_elevation,
-                       fast=self.fast)
-
-           ## if applying the Liston and Elder 2006 wind-microtopographic adjustment
-           ## the terrai curvature needs to be set
-           ## note, this calls a wrapped fortran function.
-           ## if not, just set it equal to 1 everywhere.
-           if self.Liston_wind == True:
-               self.omega_c=get_curvature_ftn(self.elevation,eta=self.eta)
-           else:
-               self.omega_c=np.ones_like(self.elevation)
+        ## if applying the Liston and Elder 2006 wind-microtopographic adjustment
+        ## the terrai curvature needs to be set
+        ## note, this calls a wrapped fortran function.
+        ## if not, just set it equal to 1 everywhere.
+        if self.Liston_wind == True:
+            self.omega_c=get_curvature_ftn(self.elevation,eta=self.eta)
+        else:
+            self.omega_c=np.ones_like(self.elevation)
 
     def load_static_data(self,show=True):
         """ This function loads the static DEM and LC data into arrays and stores them as part of the BSHARP module.
