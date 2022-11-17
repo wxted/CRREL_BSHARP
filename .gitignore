@@ -6,3 +6,4 @@ src_ftn/*.DYSM/
 bsharp/bsharp.egg-info/
 bsharp/*.so
 bsharp/*.DYSM/
+bsharp/.idea
