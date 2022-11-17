@@ -1,0 +1,7 @@
+setup.py
+bsharp/bsharp.egg-info/PKG-INFO
+bsharp/bsharp.egg-info/SOURCES.txt
+bsharp/bsharp.egg-info/dependency_links.txt
+bsharp/bsharp.egg-info/requires.txt
+bsharp/bsharp.egg-info/top_level.txt
+src_ftn/fortran_funcs.f95
