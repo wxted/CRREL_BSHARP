@@ -49,8 +49,13 @@ def get_mod_date(dhour='Auto',t00=5,t12=15,init_time=0):
         return dd,HH
 
 
-def get_gribpy2(grib_file,max_attempts=3,outfolder='/Users/rdcrltwl/Desktop/blowing_snow_model/test_data/',fnum=1,date='20180712'):
+def get_gribpy2(grib_file,max_attempts=3,outfolder='cwd',fnum=1,date='20180712'):
     attempts = 0
+    import os
+
+    if outfolder.lower() == 'cwd':
+        outfolder = os.getcwd()
+
     while attempts < max_attempts:
         try:
             response = urllib2.urlopen(grib_file, timeout = 5)
@@ -63,8 +68,12 @@ def get_gribpy2(grib_file,max_attempts=3,outfolder='/Users/rdcrltwl/Desktop/blow
             attempts += 1
             print(type(e))
 
-def get_gribpy3(grib_file,max_attempts=3,outfolder='/Users/rdcrltwl/Desktop/blowing_snow_model/test_data/',fnum=1,date='20180712'):
+def get_gribpy3(grib_file,max_attempts=3,outfolder='cwd',fnum=1,date='20180712'):
     attempts = 0
+
+    if outfolder.lower() == 'cwd':
+        outfolder = os.getcwd()
+
     while attempts < max_attempts:
         try:
             response = urllib.request.urlopen(grib_file, timeout = 5)

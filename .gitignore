@@ -8,3 +8,4 @@ bsharp/*.so
 bsharp/*.DYSM/
 bsharp/.idea
 bsharp/__pycache__/
+bsharp.egg-info/

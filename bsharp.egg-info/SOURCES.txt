@@ -17,14 +17,6 @@ bsharp.egg-info/SOURCES.txt
 bsharp.egg-info/dependency_links.txt
 bsharp.egg-info/requires.txt
 bsharp.egg-info/top_level.txt
-bsharp/__pycache__/__init__.cpython-37.pyc
-bsharp/__pycache__/__init__.cpython-38.pyc
-bsharp/__pycache__/main_functions.cpython-37.pyc
-bsharp/__pycache__/main_functions.cpython-38.pyc
-bsharp/__pycache__/misc_funcs.cpython-37.pyc
-bsharp/__pycache__/misc_funcs.cpython-38.pyc
-bsharp/__pycache__/terrain_functions.cpython-37.pyc
-bsharp/__pycache__/terrain_functions.cpython-38.pyc
 dist/bsharp-0.3-py3.8-macosx-10.9-x86_64.egg
 dist/bsharp-0.5-py3.8-macosx-10.9-x86_64.egg
 src_ftn/fortran_funcs.f
