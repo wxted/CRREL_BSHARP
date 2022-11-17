@@ -1,0 +1,8 @@
+build/
+dist/
+src_ftn/*.so
+src_ftn/*.c
+src_ftn/*.DYSM/
+bsharp/bsharp.egg-info/
+bsharp/*.so
+bsharp/*.DYSM/
