@@ -1,2 +1,0 @@
-bsharp
-ftn_funcs
