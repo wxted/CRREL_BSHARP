@@ -8,10 +8,12 @@ demPath='path/to/dem/geotiff/data'
 OutputPath='path/to/output'
 cdfname='BSHARP_Output.nc'
 
+
 t1=DT.datetime.now()
 model=BSHARP.BSHARP(region='',local_path=MetDataPath,
                     dem_path=demPath,
                     restart=False)
+
 
 print("Time to Initialize Model.: %.1f"%((DT.datetime.now()-t1).total_seconds()))
 
