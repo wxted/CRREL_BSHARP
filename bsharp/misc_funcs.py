@@ -60,7 +60,7 @@ def get_gribpy2(grib_file,max_attempts=3,outfolder='cwd',fnum=1,date='20180712')
         try:
             response = urllib2.urlopen(grib_file, timeout = 5)
             content = response.read()
-            f = open( outfolder+'NAM_{:02d}'.format(fnum)+'_%s.grb'%(date), 'w' )
+            f = open( os.path.join(outfolder,'NAM_{:02d}'.format(fnum)+'_%s.grb'%(date)), 'wb' )
             f.write( content )
             f.close()
             break
@@ -68,8 +68,13 @@ def get_gribpy2(grib_file,max_attempts=3,outfolder='cwd',fnum=1,date='20180712')
             attempts += 1
             print(type(e))
 
+        if attempts == max_attempts:
+            print("!!! FILE NOT DOWNLOADED !!!")
+
+
 def get_gribpy3(grib_file,max_attempts=3,outfolder='cwd',fnum=1,date='20180712'):
     attempts = 0
+    import os
 
     if outfolder.lower() == 'cwd':
         outfolder = os.getcwd()
@@ -78,10 +83,13 @@ def get_gribpy3(grib_file,max_attempts=3,outfolder='cwd',fnum=1,date='20180712')
         try:
             response = urllib.request.urlopen(grib_file, timeout = 5)
             content = response.read()
-            f = open( outfolder+'NAM_{:02d}'.format(fnum)+'_%s.grb'%(date), 'wb' )
+            f = open( os.path.join(outfolder,'NAM_{:02d}'.format(fnum)+'_%s.grb'%(date)), 'wb' )
             f.write( content )
             f.close()
             break
         except urllib.request.URLError as e:
             attempts += 1
             print(type(e))
+
+    if attempts == max_attempts:
+        print("!!! FILE NOT DOWNLOADED !!!")

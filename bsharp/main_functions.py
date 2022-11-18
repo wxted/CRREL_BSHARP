@@ -6,7 +6,7 @@ data_src_opts=['local','ftp','NOMADS']
 
 def download_grib(lonlat=[-166.66,-137.98,55.14,71.84],
     local_folder='cwd',
-    tmin=1,tmax=48,tstep=1,plevs=[600,800,950,975,1000]):
+    tmin=1,tmax=48,tstep=1,plevs=[600,800,950,975,1000],data_opt='nam_ak'):
     """Download grib is a helper function written as a means to acquire grib2 data file
        subsets from the NOAA NOMADS database.  It uses the urllib2 or urllib libraries
        to pull initiate pull requests from NOMADS with subset commands for pressure-levels, time, and lat/lon boundaries
@@ -26,7 +26,7 @@ def download_grib(lonlat=[-166.66,-137.98,55.14,71.84],
        tmax (int, optional): maximum timestep
        tstep (int,optional): time-step interval
        plevs (list, optional): pressure levels (in hPa) -> NOTE: must be levels that are output as part model output, otherwise it will not find grib files.
-
+       data_opt (string, optional): Chooses which data source to pull from the NOMADS ftp site, currently allows nam_ak and nam_conus
     """
 
     ## first try to load urllib2, if not, then load urllib
@@ -47,16 +47,25 @@ def download_grib(lonlat=[-166.66,-137.98,55.14,71.84],
     dd,HH=get_mod_date(dhour='Auto')
     timesteps=np.arange(tmin,tmax+tstep,tstep)
 
-    if local_folder.lower() ==' cwd':
-        local_folder=os.path.getcwd()
+    if local_folder.lower() =='cwd':
+        local_folder=os.getcwd()
 
-    local_folder=local_folder+dd+'/'
+    local_folder=os.path.join(local_folder,dd)
+    if not os.path.exists(local_folder):
+        os.makedirs(local_folder)
 
     ## Set list of levels and variables
     levels=['2_m_above_ground','10_m_above_ground']+[str(i)+'_mb' for i in plevs]+['surface']
     vars_=['TMP','HGT','APCP','UGRD','VGRD','DSWRF','SNOWC','SNOD']
 
-    init_string='https://nomads.ncep.noaa.gov/cgi-bin/filter_nam_alaskanest.pl?file=nam.t{:02d}z.alaskanest.hires'.format(HH)
+    if data_opt.lower() == 'nam_ak':
+        init_string='https://nomads.ncep.noaa.gov/cgi-bin/filter_nam_alaskanest.pl?file=nam.t{:02d}z.alaskanest.hires'.format(HH)
+
+    elif data_opt.lower() == 'nam_conus':
+        init_string='https://nomads.ncep.noaa.gov/cgi-bin/filter_nam_conusnest.pl?file=nam.t{:02d}z.conusnest.hires'.format(HH)
+    else:
+        print("This data choice is not an option yet!, only nam_ak and nam_conus are currently accepted.")
+        sys.exit()
 
     ## Build string of levels from list of levels
     level_string=''
@@ -93,7 +102,7 @@ def create_DEM_subset(dem_file,ll_file,dem_path='cwd',
     import os
 
     if dem_path.lower() ==' cwd':
-        dem_path=os.path.getcwd()
+        dem_path=os.getcwd()
 
     ds = gdal.Open(dem_file)
     ds = gdal.Translate('%s%s_dem_ll.tif'%(dem_path,dem_pfx), ds, projWin = box)
@@ -146,14 +155,14 @@ class BSHARP:
 
         import os
 
-        if local_path.lower() ==' cwd':
-            local_path=os.path.join(os.path.getcwd(),'inputdata')
+        if local_path.lower() =='cwd':
+            local_path=os.path.join(os.getcwd(),'inputdata')
 
-        if dem_path.lower() ==' cwd':
-            dem_path=os.path.join(os.path.getcwd(),'demdata')
+        if dem_path.lower() =='cwd':
+            dem_path=os.path.join(os.getcwd(),'demdata')
 
-        if rst_path.lower() ==' cwd':
-            rst_path=os.path.join(os.path.getcwd(),'outputdata')
+        if rst_path.lower() =='cwd':
+            rst_path=os.path.join(os.getcwd(),'outputdata')
 
 
         ## This section checks to make sure that the data source the user has specified is a valid data source.  If not, it defaults to "local"

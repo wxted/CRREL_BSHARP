@@ -9,10 +9,16 @@ OutputPath='path/to/output'
 cdfname='BSHARP_Output.nc'
 
 
+## Example to download data ##
+BSHARP.download_grib(data_opt='nam_conus',tmin=1,tmax=6,plevs=[1000,950,900],
+                    lonlat=[-100,-90,40,50])
+
+
 t1=DT.datetime.now()
 model=BSHARP.BSHARP(region='',local_path=MetDataPath,
                     dem_path=demPath,
                     restart=False)
+
 
 
 print("Time to Initialize Model.: %.1f"%((DT.datetime.now()-t1).total_seconds()))
