@@ -252,7 +252,7 @@ class BSHARP:
         self.TGminweight = 0.5 # auto-correlation (i.e., memory) of surface temperature (e.g., a value of 0.5 means that 50% of the surface temperature will be the 2m temperatre and 50% will be previous timestep).
         self.TGpercent=0.7 # how deep into snowpack to compute TG (IF Snowdepth less than max_depth), a value of 0.7 = 70%.  If snowdepth is GREATER than max depth, then bottom depth is assumed max_depth.
         ## where output netcdf and .tiff files are written to.
-        self.output_path=os.path.join(os.path.getcwd(),'outputdata')
+        self.output_path=os.path.join(os.getcwd(),'outputdata')
 
         ## This section performs the basic initalization of the model.
         ## Loads DEM, loads NWP grid / elevation
