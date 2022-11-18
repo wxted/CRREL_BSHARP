@@ -1,40 +1,4 @@
 
-
-
-subroutine laplace(stuff, fuzz, m, n)
-
-implicit none
-integer, intent(in) :: m
-integer, intent(in) :: n
-integer :: j,k
-real, intent(in), dimension(m,n) :: stuff
-real, intent(out), dimension(m,n) :: fuzz
-
-do j = 1, m -1
-  do k = 1, n-1
-    fuzz(j,k) = 0.5*stuff(j,k)+stuff(j,k)*stuff(j,k)
-  end do
-end do
-end subroutine laplace
-
-
-!subroutine bilinear_interp(x_to,y_to,x_from,y_from,var_from,var_to,n,m,l)
-!  implicit none
-!  integer, intent(in):: n,m,l
-!  integer :: i,j,k
-!  real, intent(in),dimension(n,m) :: x_to,y_to
-!  real, intent(in),dimension(l) :: x_from, y_from, var_from
-!  real, intent(out), dimension(n,m) :: var_to
-!  do i = 1, m
-!    do j=1, n
-!      do k=1,l-1
-!        fxy1=5.!var_from(k)*(1.-(x_to(i,j)-x_from(k))/(x_from(k+1)-x_from(k)))+var_from(k)*(1.-(x_to(i,j)-x_from(k))/(x_from(k+1)-x_from(k)))
-!      enddo
-!    enddo
-!  enddo
-!end subroutine bilinear_interp
-
-
 subroutine interp1(xData,yData,xVal,yVal,n,m)
 ! Inputs: xData = a vector of the x-values of the data to be interpolated
 !         yData = a vector of the y-values of the data to be interpolated
